@@ -36,13 +36,10 @@ RUN sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#g' /e
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
-RUN pwd
-#RUN composer install
-
-
+#RUN chown -R 1000:1000 /var/www/html
 
 RUN a2enmod rewrite
 
-
+USER 1000
+#RUN composer install
 

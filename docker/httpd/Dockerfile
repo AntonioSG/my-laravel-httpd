@@ -36,10 +36,9 @@ RUN sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#g' /e
 
 WORKDIR /var/www/html
 
-#RUN chown -R 1000:1000 /var/www/html
+COPY --chown=www-data:www-data ./src/hello-laravel /var/www/html/
 
 RUN a2enmod rewrite
 
-USER 1000
-#RUN composer install
-
+RUN composer install
+RUN php artisan migrate --seed

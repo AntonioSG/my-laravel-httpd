@@ -34,11 +34,13 @@ RUN sed -i 's/;extension=pdo_mysql/extension=pdo_mysql/g' $PHP_INI_DIR/conf.d/ph
 RUN sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
 
 
-WORKDIR /var/www/html
-
-COPY --chown=www-data:www-data ./src/hello-laravel /var/www/html/
+COPY --chown=www-data:www-data src/hello-laravel /var/www/html/
 
 RUN a2enmod rewrite
 
+WORKDIR /var/www/html
+
 RUN composer install
-RUN php artisan migrate --seed
+
+#No se puede hcer la migración en la fase build porque no está disponible la base de datos
+#RUN php artisan migrate
